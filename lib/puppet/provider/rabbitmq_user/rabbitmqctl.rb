@@ -23,7 +23,9 @@ Puppet::Type.type(:rabbitmq_user).provide(:rabbitmqctl) do
   end
 
   def create
-    rabbitmqctl('add_user', resource[:name], resource[:password])
+    unless exists?
+      rabbitmqctl('add_user', resource[:name], resource[:password])
+    end
     if resource[:admin] == :true
       make_user_admin()
     end
@@ -42,7 +44,7 @@ Puppet::Type.type(:rabbitmq_user).provide(:rabbitmqctl) do
     end
   end
 
- 
+
   def tags
     get_user_tags.entries.sort
   end
