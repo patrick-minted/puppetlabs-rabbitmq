@@ -1,9 +1,10 @@
 #
-class rabbitmq::install::rabbitmqadmin {
+class rabbitmq::install::rabbitmqadmin(
+  $management_port = $rabbitmq::management_port,
+  $default_user    = $rabbitmq::default_user,
+  $default_pass    = $rabbitmq::default_pass
+  ){
 
-  $management_port = $rabbitmq::management_port
-  $default_user = $rabbitmq::default_user
-  $default_pass = $rabbitmq::default_pass
   $protocol = $rabbitmq::ssl ? { false => 'http', default => 'https' }
 
   staging::file { 'rabbitmqadmin':
